@@ -41,16 +41,24 @@ class TasksController extends Controller
      * @return \Illuminate\Http\Response
      */
    // postでmessages/にアクセスされた場合の「新規登録処理」
-    public function store(Request $request)
+   public function store(Request $request)
     {
+        // バリデーション
+        $request->validate([
+            'title' => 'required|max:255',   // 追加
+            'content' => 'required|max:255',
+        ]);
+
         // メッセージを作成
         $task = new Task;
+        $task->title = $request->title;    // 追加
         $task->content = $request->content;
         $task->save();
 
         // トップページへリダイレクトさせる
         return redirect('/');
     }
+
 
     /**
      * Display the specified resource.
@@ -96,8 +104,13 @@ class TasksController extends Controller
      * @return \Illuminate\Http\Response
      */
     // putまたはpatchでmessages/idにアクセスされた場合の「更新処理」
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
     {
+        // バリデーション
+        $request->validate([
+            'content' => 'required|max:255',
+        ]);
+
         // idの値でメッセージを検索して取得
         $task = Task::findOrFail($id);
         // メッセージを更新
@@ -107,8 +120,6 @@ class TasksController extends Controller
         // トップページへリダイレクトさせる
         return redirect('/');
     }
-
-
     /**
      * Remove the specified resource from storage.
      *
