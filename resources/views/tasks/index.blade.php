@@ -17,7 +17,7 @@
                 @foreach ($tasks as $task)
                 <tr>
                     {{-- メッセージ詳細ページへのリンク --}}
-                    <td>{!! link_to_route('tasks.show', $mtask->id, ['task' => $task->id]) !!}</td>
+                    <td>{!! link_to_route('tasks.show', $task->id, ['task' => $task->id]) !!}</td>
                     <td>{{ $task->title }}</td>
                     <td>{{ $task->content }}</td>
                 </tr>
@@ -25,7 +25,8 @@
             </tbody>
         </table>
     @endif
-    {{-- タスク作成ページへのリンク --}}
+
+    {{-- メッセージ作成ページへのリンク --}}
     {!! link_to_route('tasks.create', '新規タスクの投稿', [], ['class' => 'btn btn-primary']) !!}
 
 @endsection
