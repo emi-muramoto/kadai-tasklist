@@ -20,10 +20,10 @@ class TasksController extends Controller
     }
 
 
-    // getでmessages/createにアクセスされた場合の「新規登録画面表示処理」
+     // getでmessages/createにアクセスされた場合の「新規登録画面表示処理」
     public function create()
     {
-        $task= new Tasks;
+        $task = new Task;
 
         // メッセージ作成ビューを表示
         return view('tasks.create', [
@@ -37,13 +37,13 @@ class TasksController extends Controller
     {
         // バリデーション
         $request->validate([
-            'title' => 'required|max:255',   // 追加
+            'status' => 'required|max:255',   // 追加
             'content' => 'required|max:255',
         ]);
 
         // メッセージを作成
         $task = new task;
-        $task->title = $request->title;    // 追加
+        $task->status = $request->title;    // 追加
         $task->content = $request->content;
         $task->save();
 
@@ -82,14 +82,14 @@ class TasksController extends Controller
     {
         // バリデーション
         $request->validate([
-            'title' => 'required|max:255',   // 追加
+            'status' => 'required|max:255',   // 追加
             'content' => 'required|max:255',
         ]);
 
         // idの値でメッセージを検索して取得
         $task = task::findOrFail($id);
         // メッセージを更新
-        $task->title = $request->title;    // 追加
+        $task->status = $request->status;    // 追加
         $task->content = $request->content;
         $task->save();
 
