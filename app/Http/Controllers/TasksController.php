@@ -18,7 +18,8 @@ class TasksController extends Controller
             'tasks' => $tasks,
         ]);
     }
-
+    
+    
 
      // getでmessages/createにアクセスされた場合の「新規登録画面表示処理」
     public function create()
@@ -43,7 +44,7 @@ class TasksController extends Controller
 
         // メッセージを作成
         $task = new task;
-        $task->status = $request->title;    // 追加
+        $task->status = $request->status;    // 追加
         $task->content = $request->content;
         $task->save();
 
