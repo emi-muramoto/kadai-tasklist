@@ -17,7 +17,8 @@
             <th>タスク</th>
             <td>{{ $task->content }}</td>
         </tr>
-    </table>
+     </table>
+
     {{-- メッセージ編集ページへのリンク --}}
     {!! link_to_route('tasks.edit', 'このタスクを編集', ['task' => $task->id], ['class' => 'btn btn-light']) !!}
 
