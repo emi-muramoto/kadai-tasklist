@@ -46,7 +46,10 @@ class TasksController extends Controller
         $task = new task;
         $task->status = $request->status;    // 追加
         $task->content = $request->content;
+        $task->user_id = $request->user()->id;
         $task->save();
+        
+        
 
         // トップページへリダイレクトさせる
         return redirect('/');
@@ -54,12 +57,10 @@ class TasksController extends Controller
 
 
     // getでmessages/idにアクセスされた場合の「取得表示処理」
-    public function show($id)
+   public function show($id)
     {
-        // idの値でメッセージを検索して取得
-        $task = task::findOrFail($id);
+        $task = Task::find($id);
 
-        // メッセージ詳細ビューでそれを表示
         return view('tasks.show', [
             'task' => $task,
         ]);
@@ -104,8 +105,11 @@ class TasksController extends Controller
     {
         // idの値でメッセージを検索して取得
         $task = task::findOrFail($id);
-        // メッセージを削除
-        $task->delete();
+        
+         // 認証済みユーザ（閲覧者）がその投稿の所有者である場合は、投稿を削除
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
 
         // トップページへリダイレクトさせる
         return redirect('/');
